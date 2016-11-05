@@ -14,7 +14,7 @@ namespace WifiManager
         {
 
             List<WifiNetwork> WifiNetworklist = new List<WifiNetwork>();
-            WifiNetworklist.Add(new WifiNetwork("Sunrise_2.4GHz_65F040", "test", "DHCP", "0.0.0.0"));
+            WifiNetworklist.Add(new WifiNetwork("Sunrise_2.4GHz_65F040", "test", "static", "192.168.10.45"));
             WifiNetworklist.Add(new WifiNetwork("aerne", "test", "DHCP", "0.0.0.0"));
             WifiNetworklist.Add(new WifiNetwork("aerne", "test", "DHCP", "0.0.0.0"));
             WifiNetworklist.Add(new WifiNetwork("aerne", "test", "DHCP", "0.0.0.0"));
@@ -105,6 +105,25 @@ namespace WifiManager
             }
         }
 
+        public class SelectNetwork
+        {
+            string _netmsg;
+            bool _IsInList;
+            int _listindex;
+            string _SSID;
+
+            public SelectNetwork(string Netmsg, bool IsinList, int ListIndex,string ssid)
+            {
+                this._netmsg = Netmsg;
+                this._IsInList = IsinList;
+                this._listindex = ListIndex;
+                this._SSID = ssid;
+            }
+            public string netmsg { get { return _netmsg; } }
+            public bool IsInList { get { return _IsInList; } }
+            public int listindex { get { return _listindex; } }
+            public string SSID { get { return _SSID; } }
+        }
 
         public class WifiNetwork
         {
