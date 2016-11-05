@@ -24,14 +24,15 @@ namespace WifiManager
                     foreach (var managementObject in networkConfigs.Cast<ManagementObject>().Where(managementObject => (bool)managementObject["IPEnabled"]))
                     {
 
-                    
+                        
                         string name = managementObject["Caption"].ToString();
-                        if (name.Contains("Wireless"))
+                        if (name.Contains(nicname))
                         {
                             Console.WriteLine(managementObject["Caption"].ToString());
 
                             if (type.Equals('s'))
                             {
+                                Console.WriteLine("Static IP Enabled");
                                 using (var newIP = managementObject.GetMethodParameters("EnableStatic"))
                                 {
                                     // Set new IP address and subnet if needed

@@ -35,7 +35,7 @@ namespace WifiManager
             XML_Functions.Create_XML_WifiNetwork_File();
             XML_Functions.Read_XML_WifiNetwork_File(network_list);
             WlanClient client = new WlanClient();
-
+            
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("***************** Avaible Wireless Networks ***************************");
@@ -271,7 +271,9 @@ namespace WifiManager
                 }
                 else
                 {
-                     keypwd=network_list[j].Key;
+                   // Console.WriteLine(select_list[j].listindex.ToString());
+                     keypwd=network_list[select_list[j].listindex].Key;
+                     Console.WriteLine(keypwd);
                 }
                 // Connects to a known network with WEP security
                 // this is also the SSID
@@ -295,19 +297,19 @@ namespace WifiManager
                         failed = true;
                     }
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 if (failed == false)
                 {
                     if (select_list[j].IsInList == true)
                     {
                         if (network_list[select_list[j].listindex].DHCPorSTATIC == "DHCP")
                         {
-
+                            Console.WriteLine("Dynamic IP");
                             NetworkAdapter.SetIP("192.168.0.11", "255.255.255.0", adaptername, 'd');
                         }
                         else if (network_list[select_list[j].listindex].DHCPorSTATIC == "static")
                         {
-
+                            Console.WriteLine("Static IP");
                             NetworkAdapter.SetIP(network_list[select_list[j].listindex].StaticIP, "255.255.255.0", adaptername, 's');
                         }
 
@@ -335,6 +337,7 @@ namespace WifiManager
                                     valid_ip = true;
                                     //Console.WriteLine(ip_adress.LastIndexOf("."));
                                     NetworkAdapter.SetIP(ip_adress, "255.255.255.0", "Realtek PCIe GBE Family Controller", name.KeyChar);
+                                    XML_Functions.Change_XML_WifiNetwork_File(new XML_Functions.WifiNetwork(select_list[j].SSID, keypwd, "static", ip_adress));
                                 }
                                 else
                                 {
@@ -346,8 +349,11 @@ namespace WifiManager
 
                         else if (name.KeyChar.ToString() == "d")
                         {
+                            XML_Functions.Change_XML_WifiNetwork_File(new XML_Functions.WifiNetwork(select_list[j].SSID,keypwd,"DHCP","0.0.0.0"));
                             NetworkAdapter.SetIP(ip_adress, "255.255.255.0", "Realtek PCIe GBE Family Controller", name.KeyChar);
                         }
+
+                        
                     }
 
                 }

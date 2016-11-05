@@ -70,6 +70,7 @@ namespace WifiManager
             }
         }
 
+
         /// <summary>
         /// Read the WifiNetwork file 
         /// </summary>
@@ -104,6 +105,45 @@ namespace WifiManager
                 Console.WriteLine(ex.StackTrace);
             }
         }
+
+        public static void Change_XML_WifiNetwork_File(WifiNetwork WifiNetwork)
+        {
+
+            try
+            {
+                // Console.WriteLine(xml_name);
+                if (File.Exists(xml_name))
+                {
+
+                    XmlDocument xdoc = new XmlDocument();
+                    xdoc.Load(xml_name);
+
+                    XmlElement node = xdoc.CreateElement("WifiNetwork");
+                    XmlElement SSID = xdoc.CreateElement("SSID");
+                    SSID.InnerText = WifiNetwork.SSID;
+                    XmlElement Key = xdoc.CreateElement("Key");
+                    Key.InnerText = WifiNetwork.Key;
+                    XmlElement DHCPorSTATIC = xdoc.CreateElement("DHCPorSTATIC");
+                    DHCPorSTATIC.InnerText = WifiNetwork.DHCPorSTATIC;
+                    XmlElement StaticIP = xdoc.CreateElement("StaticIP");
+                    StaticIP.InnerText = WifiNetwork.StaticIP;
+                    node.AppendChild(SSID);
+                    node.AppendChild(Key);
+                    node.AppendChild(DHCPorSTATIC);
+                    node.AppendChild(StaticIP);
+                    xdoc.DocumentElement.AppendChild(node);
+
+                    xdoc.Save(xml_name);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
+
 
         public class SelectNetwork
         {
