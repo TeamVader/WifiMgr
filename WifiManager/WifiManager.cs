@@ -275,8 +275,7 @@ namespace WifiManager
                      keypwd=network_list[select_list[j].listindex].Key;
                      Console.WriteLine(keypwd);
                 }
-                // Connects to a known network with WEP security
-                // this is also the SSID
+                
                 profileName =  select_list[j].SSID;
                 string ssid = profileName;
                 byte[] ssidBytes = System.Text.Encoding.Default.GetBytes(ssid);
