@@ -15,7 +15,7 @@ namespace WifiManager
         /// <param name="ip_address">The IP Address</param>
         /// <param name="subnet_mask">The Submask IP Address</param>
         /// <remarks>Requires a reference to the System.Management namespace</remarks>
-        public static void SetIP(string ipAddress, string subnetMask, string nicname, char type)
+        public static void SetIP(string ipAddress, string subnetMask, string nicname, string type)
         {
             using (var networkConfigMng = new ManagementClass("Win32_NetworkAdapterConfiguration"))
             {
@@ -30,7 +30,7 @@ namespace WifiManager
                         {
                             Console.WriteLine(managementObject["Caption"].ToString());
 
-                            if (type.Equals('s'))
+                            if (type=="s")
                             {
                                 Console.WriteLine("Static IP Enabled");
                                 using (var newIP = managementObject.GetMethodParameters("EnableStatic"))
@@ -66,7 +66,7 @@ namespace WifiManager
 
                             }
                             //  }
-                            if (type.Equals('d'))
+                            if (type=="d")
                             {
                                 var ndns = managementObject.GetMethodParameters("SetDNSServerSearchOrder");
                                 ndns["DNSServerSearchOrder"] = null;

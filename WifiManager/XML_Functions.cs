@@ -14,7 +14,7 @@ namespace WifiManager
         {
 
             List<WifiNetwork> WifiNetworklist = new List<WifiNetwork>();
-            WifiNetworklist.Add(new WifiNetwork("Sunrise_2.4GHz_65F040", "test", "static", "192.168.10.45"));
+           
             WifiNetworklist.Add(new WifiNetwork("aerne", "test", "DHCP", "0.0.0.0"));
             WifiNetworklist.Add(new WifiNetwork("aerne", "test", "DHCP", "0.0.0.0"));
             WifiNetworklist.Add(new WifiNetwork("aerne", "test", "DHCP", "0.0.0.0"));
