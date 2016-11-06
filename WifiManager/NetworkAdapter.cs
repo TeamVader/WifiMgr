@@ -48,8 +48,10 @@ namespace WifiManager
                                             newIP["SubnetMask"] = new[] { subnetMask };
                                         }
 
-                                        managementObject.InvokeMethod("EnableStatic", newIP, null);
+                                        managementObject.InvokeMethod("EnableStatic", new object[] {new string[] { ipAddress}, new string[] {  subnetMask} });
+                                        Console.WriteLine("Set New IP");
                                     }
+
 
                                     // Set mew gateway if needed
                                     /**
