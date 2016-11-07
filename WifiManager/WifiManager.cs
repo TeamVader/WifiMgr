@@ -275,9 +275,17 @@ namespace WifiManager
                 byte[] ssidBytes = System.Text.Encoding.Default.GetBytes(ssid);
                 string ssidHex = BitConverter.ToString(ssidBytes);
                 ssidHex = ssidHex.Replace("-", "");
-
+                string profileXml = "";
                 string key = keypwd;
-                string profileXml = string.Format("<?xml version=\"1.0\"?><WLANProfile xmlns=\"http://www.microsoft.com/networking/WLAN/profile/v1\"><name>{0}</name><SSIDConfig><SSID><hex>{1}</hex><name>{0}</name></SSID></SSIDConfig><connectionType>ESS</connectionType><connectionMode>manual</connectionMode><MSM><security><authEncryption><authentication>WPA2PSK</authentication><encryption>AES</encryption><useOneX>false</useOneX></authEncryption><sharedKey><keyType>passPhrase</keyType><protected>false</protected><keyMaterial>{2}</keyMaterial></sharedKey></security></MSM></WLANProfile>", ssid, ssidHex, key);
+                if (keypwd == "")
+                {
+                    Console.WriteLine("Open Wifi Network");
+                    profileXml = string.Format("<?xml version=\"1.0\"?><WLANProfile xmlns=\"http://www.microsoft.com/networking/WLAN/profile/v1\"><name>{0}</name><SSIDConfig><SSID><hex>{1}</hex><name>{0}</name></SSID></SSIDConfig><connectionType>ESS</connectionType><connectionMode>manual</connectionMode><MSM><security><authEncryption><authentication>open</authentication><encryption>none</encryption><useOneX>false</useOneX></authEncryption></security></MSM></WLANProfile>", ssid, ssidHex);
+                }
+                else
+                {
+                    profileXml = string.Format("<?xml version=\"1.0\"?><WLANProfile xmlns=\"http://www.microsoft.com/networking/WLAN/profile/v1\"><name>{0}</name><SSIDConfig><SSID><hex>{1}</hex><name>{0}</name></SSID></SSIDConfig><connectionType>ESS</connectionType><connectionMode>manual</connectionMode><MSM><security><authEncryption><authentication>WPA2PSK</authentication><encryption>AES</encryption><useOneX>false</useOneX></authEncryption><sharedKey><keyType>passPhrase</keyType><protected>false</protected><keyMaterial>{2}</keyMaterial></sharedKey></security></MSM></WLANProfile>", ssid, ssidHex, key);
+                }
                 client = new WlanClient();
 
 
@@ -303,14 +311,17 @@ namespace WifiManager
                         if (network_list[select_list[j].listindex].DHCPorSTATIC == "DHCP")
                         {
                             Console.WriteLine("Dynamic IP");
+                            Console.WriteLine("Wait until Finished!");
                             NetworkAdapter.SetIP("192.168.0.11", "255.255.255.0", adaptername, "d");
                         }
                         else if (network_list[select_list[j].listindex].DHCPorSTATIC == "static")
                         {
                             Console.WriteLine(string.Format("Static IP : {0}",network_list[select_list[j].listindex].StaticIP));
+                            Console.WriteLine("Wait until Finished!");
                             NetworkAdapter.SetIP(network_list[select_list[j].listindex].StaticIP, "255.255.255.0", adaptername, "s");
                         }
 
+                        
                     }
                     else
                     {
